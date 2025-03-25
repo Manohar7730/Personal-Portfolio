@@ -704,6 +704,7 @@ main {
   display: -webkit-box;
   /* -webkit-line-clamp: 6; */
   -webkit-box-orient: vertical;
+  white-space: wrap;
 }
 
 /* Footer/Contact Section */
