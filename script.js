@@ -242,11 +242,25 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("DOMContentLoaded", function () {
   const projectsData = [
     {
-      href: "https://manohar7730.github.io/Todo_list/",
-      previewSrc: "assets/projectPreview/todoList.png",
-      title: "Todo-list",
+      href: "https://vaultvista.netlify.app/",
+      previewSrc: "assets/projectPreview/VaultVista.png",
+      title: "Vault Vista Expense Tracker",
       description:
-        "Implemented essential features like adding, deleting, and monitoring tasks for an enhanced task management experience.",
+        "Empowering financial management with login, register, income, expense tracking, and transaction history features. Built with React, Firebase, Bootstrap, Styled-components, and Vite-React.",
+    },
+    {
+      href: "https://e-commerce-oy6q.onrender.com",
+      previewSrc: "assets/projectPreview/e-commerce.png",
+      title: "E-Commerce Website",
+      description:
+        "A full-stack product management app using React, Node.js, and MongoDB, supporting CRUD operations and tested REST APIs.",
+    },
+    {
+      href: "https://trackitdaily.netlify.app/",
+      previewSrc: "assets/projectPreview/Task Management.png",
+      title: "Track it Daily Website",
+      description:
+        "A full-stack task management system with React, Node.js, and MongoDB, enabling task creation, updates, status tracking, and tested REST APIs.",
     },
     {
       href: "https://manohar7730.github.io/IMDB-Clone/",
@@ -256,11 +270,11 @@ document.addEventListener("DOMContentLoaded", function () {
         "Developed a movie information website and ensured seamless accessibility across various devices by applying responsive design principles.",
     },
     {
-      href: "https://weather-app-2102.netlify.app/",
-      previewSrc: "assets/projectPreview/weatherApp.png",
-      title: "Weather Insight App",
+      href: "https://add-to-cart-mobile-app-2102.netlify.app/",
+      previewSrc: "assets/projectPreview/AddToCartMobileApp.png",
+      title: "Add-To-Cart Mobile App",
       description:
-        "Providing real-time updates on temperature, humidity, and wind speed. The intuitive and visually appealing interface ensures a seamless user experience for staying informed about weather conditions.",
+        "The Firebase Realtime Shopping List is a web app using Firebase Database for dynamic item addition and removal, providing real-time updates and collaborative management.",
     },
     {
       href: "https://manohar7730.github.io/IPOD/",
@@ -270,32 +284,27 @@ document.addEventListener("DOMContentLoaded", function () {
         "The React iPod App is a nostalgic music player, recreating the classic iPod interface with a responsive touch interface, rotating click wheel, and customizable themes using React.",
     },
     {
+      href: "https://weather-app-2102.netlify.app/",
+      previewSrc: "assets/projectPreview/weatherApp.png",
+      title: "Weather Insight App",
+      description:
+        "Providing real-time updates on temperature, humidity, and wind speed. The intuitive and visually appealing interface ensures a seamless user experience for staying informed about weather conditions.",
+    },
+
+    {
       href: "https://blackjack-game-2102.netlify.app/",
       previewSrc: "assets/projectPreview/BlackJackGame.png",
       title: "BlackJack Game",
       description:
         "In this game, players aim to achieve a card sum close to 21 without exceeding it, with dynamic player statistics and restrictions on the maximum number of games allowed.",
     },
-    {
-      href: "https://add-to-cart-mobile-app-2102.netlify.app/",
-      previewSrc: "assets/projectPreview/AddToCartMobileApp.png",
-      title: "Add-To-Cart Mobile App",
-      description:
-        "The Firebase Realtime Shopping List is a web app using Firebase Database for dynamic item addition and removal, providing real-time updates and collaborative management.",
-    },
+
     {
       href: "https://github.com/Manohar7730/LeadsTracker-ChromeExtension",
       previewSrc: "assets/projectPreview/Chrome-Extension.png",
       title: "Leads Tracker Chrome Extension",
       description:
         "This JavaScript code serves as a concise bookmark management extension, capturing and storing the current tab URL on button click. It displays clickable bookmarks and allows users to clear all with a double-click.",
-    },
-    {
-      href: "https://vaultvista.netlify.app/",
-      previewSrc: "assets/projectPreview/VaultVista.png",
-      title: "Vault Vista Expense Tracker",
-      description:
-        "Empowering financial management with login, register, income, expense tracking, and transaction history features. Built with React, Firebase, Bootstrap, Styled-components, and Vite-React.",
     },
   ];
 
