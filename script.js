@@ -1,335 +1,271 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const skillsData = [
-    { name: "HTML", icon: "/assets/basic/icons/html.png" },
-    { name: "CSS", icon: "/assets/basic/icons/css.png" },
-    { name: "JavaScript", icon: "/assets/basic/icons/js.png" },
-    { name: "Bootstrap", icon: "/assets/basic/icons/bootstrap.png" },
-    { name: "React", icon: "/assets/basic/icons/react.png" },
-    { name: "Git", icon: "/assets/basic/icons/git.png" },
-    { name: "Java", icon: "/assets/basic/icons/java.png" },
-    { name: "OOPs", icon: "/assets/basic/icons/oops.png" },
-  ];
+// Initialize Portfolio with Data
+function initializePortfolio() {
+  loadNavigation();
+  loadHeroSection();
+  loadAboutSection();
+  loadEducation();
+  loadSkills();
+  loadExperience();
+  loadProjects();
+  loadSocialLinks();
 
-  const skillsContainer = document.getElementById("skillsContainer");
+  // Initialize existing functionality (only contact form and navigation)
+  initializeExistingFeatures();
+}
 
-  // Function to create skill elements
-  const createSkillElement = (skill) => {
-    const skillDiv = document.createElement("div");
-    skillDiv.classList.add("skill");
+// Load Navigation
+function loadNavigation() {
+  const navLinks = document.querySelector(".nav-links");
+  navLinks.innerHTML = portfolioData.navigation
+    .map((item) => `<li><a href="${item.href}">${item.text}</a></li>`)
+    .join("");
+}
 
-    skillDiv.innerHTML = `
-            <img src="${skill.icon}" alt="${skill.name}" class="skill-icon" aria-label="${skill.name}" />
-            <p>${skill.name}</p>
-          `;
-    return skillDiv;
-  };
+// Load Hero Section
+function loadHeroSection() {
+  const hero = portfolioData.hero;
+  const heroSection = document.querySelector(".hero-content");
 
-  // Dynamically Add Skills
-  skillsData.forEach((skill) => {
-    skillsContainer.appendChild(createSkillElement(skill));
+  heroSection.innerHTML = `
+    <h1>${hero.title}</h1>
+    <h2 class="hero-subtitle">${hero.subtitle}</h2>
+    <p>${hero.description}</p>
+    <div class="hero-buttons">
+      ${hero.buttons
+        .map(
+          (btn) => `<a href="${btn.href}" class="${btn.class}">${btn.text}</a>`,
+        )
+        .join("")}
+    </div>
+  `;
+}
+
+// Load About Section
+function loadAboutSection() {
+  const about = portfolioData.about;
+  const aboutSection = document.querySelector(".about-content");
+
+  aboutSection.innerHTML = `
+    <div class="about-image">
+      <img src="${about.image}" alt="Manohar Profile Picture" />
+    </div>
+    <div class="about-text">
+      ${about.description.map((para) => `<p>${para}</p>`).join("")}
+    </div>
+  `;
+}
+
+// Load Education Section
+function loadEducation() {
+  const educationTable = document.querySelector(".education-table tbody");
+
+  educationTable.innerHTML = portfolioData.education
+    .map(
+      (edu) => `
+    <tr>
+      <td>${edu.degree} <span>${edu.degreeShort}</span></td>
+      <td>${edu.university} <span>${edu.universityShort}</span></td>
+      <td>${edu.year}</td>
+      <td>${edu.grade}</td>
+    </tr>
+  `,
+    )
+    .join("");
+}
+
+// Load Skills Section
+function loadSkills() {
+  const skillsList = document.querySelector(".skills-list");
+
+  skillsList.innerHTML = portfolioData.skills
+    .map(
+      (skill) => `
+    <li>
+      <span>${skill.name}</span>
+      <img src="${skill.icon}" alt="${skill.name} Icon" />
+    </li>
+  `,
+    )
+    .join("");
+}
+
+// Load Experience Section
+function loadExperience() {
+  const experienceContainer = document.querySelector(".experience .container");
+  // Remove any previously injected items (keep the h2)
+  experienceContainer.querySelectorAll(".experience-item").forEach(el => el.remove());
+
+  const html = portfolioData.experience
+    .map(
+      (exp) => `
+    <article class="experience-item">
+      <h3>${exp.title}</h3>
+      <h4>${exp.company}</h4>
+      <p>Duration: ${exp.duration}</p>
+      <ul>
+        ${exp.points.map((point) => `<li><p>${point}</p></li>`).join("")}
+      </ul>
+    </article>
+  `
+    )
+    .join("");
+
+  experienceContainer.insertAdjacentHTML("beforeend", html);
+}
+
+// Load Projects Section
+function loadProjects() {
+  const projectsGrid = document.querySelector(".projects-grid");
+
+  projectsGrid.innerHTML = portfolioData.projects
+    .map(
+      (project) => `
+    <article class="project-card">
+      <div class="project-image">
+        <img src="${project.image}" alt="${project.name} Screenshot" />
+      </div>
+      <div class="project-details">
+        <h3>${project.name}</h3>
+        <p>${project.description}</p>
+        <div class="project-tech">
+          ${project.technologies.map((tech) => `<span>${tech}</span>`).join("")}
+        </div>
+        <div class="project-links">
+          <a href="${project.github}" target="_blank">
+            <img src="assets/icons/github.png" alt="GitHub Icon" />
+            <span>GitHub</span>
+          </a>
+          <a href="${project.liveDemo}" target="_blank">
+            <img src="assets/icons/external-link.png" alt="Live Demo Icon" />
+            <span>Live Demo</span>
+          </a>
+        </div>
+      </div>
+    </article>
+  `,
+    )
+    .join("");
+}
+
+// Load Social Links
+function loadSocialLinks() {
+  const socialLinks = document.querySelector(".social-links");
+
+  socialLinks.innerHTML = portfolioData.social
+    .map(
+      (social) => `
+    <li>
+      <a 
+        href="${social.url}" 
+        ${social.download ? "download" : 'target="_blank"'} 
+        aria-label="${social.name}"
+      >
+        <img src="${social.icon}" alt="${social.name} Icon" />
+      </a>
+    </li>
+  `,
+    )
+    .join("");
+}
+
+// Initialize existing features (only essential features)
+function initializeExistingFeatures() {
+  // --- Initialize EmailJS ---
+  emailjs.init({ publicKey: "TCvyjLwaMZolWGiLo" });
+
+  // --- Hamburger Menu Toggle ---
+  const hamburger = document.querySelector(".hamburger");
+  const navLinks = document.querySelector(".nav-links");
+
+  hamburger.addEventListener("click", () => {
+    navLinks.classList.toggle("active");
   });
 
-  // Clone skills for seamless looping
-  skillsData.forEach((skill) => {
-    skillsContainer.appendChild(createSkillElement(skill));
-  });
-
-  // Smooth Auto-Scroll Logic
-  let autoScroll;
-  let scrollSpeed = 10; // Default speed
-
-  const startAutoScroll = () => {
-    autoScroll = requestAnimationFrame(function scroll() {
-      skillsContainer.scrollLeft += scrollSpeed;
-
-      // Handle infinite scrolling when reaching the far right
-      if (
-        skillsContainer.scrollLeft + skillsContainer.clientWidth >=
-        skillsContainer.scrollWidth
-      ) {
-        skillsContainer.scrollLeft = 0; // Reset to the start
-      }
-
-      // Handle infinite scrolling when reaching the far left
-      if (skillsContainer.scrollLeft <= 0 && scrollSpeed < 0) {
-        skillsContainer.scrollLeft =
-          skillsContainer.scrollWidth - skillsContainer.clientWidth; // Reset to the end
-      }
-
-      autoScroll = requestAnimationFrame(scroll);
+  document.querySelectorAll(".nav-links a").forEach((link) => {
+    link.addEventListener("click", () => {
+      navLinks.classList.remove("active");
     });
-  };
+  });
 
-  const stopAutoScroll = () => {
-    cancelAnimationFrame(autoScroll);
-  };
+  // --- Highlight Navbar on Scroll ---
+  const sections = document.querySelectorAll("section");
+  const navItems = document.querySelectorAll(".nav-links li a");
 
-  // Adjust Speed on Hover
-  skillsContainer.addEventListener("mousemove", (e) => {
-    const rect = skillsContainer.getBoundingClientRect();
-    const mouseX = e.clientX - rect.left;
+  window.addEventListener("scroll", () => {
+    let current = "";
+    sections.forEach((section) => {
+      const sectionTop = section.offsetTop - 80;
+      const sectionHeight = section.clientHeight;
+      if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+        current = section.getAttribute("id");
+      }
+    });
 
-    if (mouseX < 100) {
-      scrollSpeed = -20; // Faster scroll to the left
-    } else if (mouseX > rect.width - 100) {
-      scrollSpeed = 20; // Faster scroll to the right
+    navItems.forEach((link) => {
+      link.classList.remove("active");
+      if (link.getAttribute("href") === `#${current}`) {
+        link.classList.add("active");
+      }
+    });
+
+    // Header scroll effect
+    const header = document.querySelector(".header");
+    if (window.scrollY > 50) {
+      header.classList.add("scrolled");
     } else {
-      scrollSpeed = 10; // Normal speed
+      header.classList.remove("scrolled");
     }
   });
 
-  // Pause on Hover
-  skillsContainer.addEventListener("mouseenter", stopAutoScroll);
-  skillsContainer.addEventListener("mouseleave", startAutoScroll);
-
-  // Arrow Navigation
-  const scrollAmount = skillsContainer.clientWidth / 3;
-
-  document.querySelector(".left-arrow").addEventListener("click", () => {
-    stopAutoScroll();
-    skillsContainer.scrollBy({ left: -scrollAmount, behavior: "smooth" });
-    setTimeout(startAutoScroll, 1000);
-  });
-
-  document.querySelector(".right-arrow").addEventListener("click", () => {
-    stopAutoScroll();
-    skillsContainer.scrollBy({ left: scrollAmount, behavior: "smooth" });
-    setTimeout(startAutoScroll, 1000);
-  });
-
-  // Start scrolling on page load
-  startAutoScroll();
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-  const educationEvents = [
-    {
-      date: "Apr 2015",
-      image: "/assets/universities/apSSC.png",
-      name: "School Secondary Course (SSC / Xth)",
-      completion: "Apr 2015",
-      studyDetails: ["Completed with 8.5 CGPA"],
-      school: "Kumar's Public School",
-    },
-    {
-      date: "Jul 2015 - Apr 2018",
-      image: "/assets/universities/apSBTET.jpg",
-      name: "Diploma",
-      completion: "Jul 2015 - Apr 2018",
-      studyDetails: ["In Civil Engineering course.", "Completed with 68.59%"],
-      school: "M.R.A.G.R. govt. Polytechnic College",
-      schoolImage: "/assets/institutes/MRAGR.jpg",
-    },
-    {
-      date: "Jul 2018 - Aug 2021",
-      image: "/assets/universities/JNTUK.png",
-      name: "Bachelors of Technology (B.Tech)",
-      completion: "Jul 2018 - Jul 2021",
-      studyDetails: [
-        "In Civil Engineering course.",
-        "Completed with 7.22 CGPA",
-      ],
-      school: "Visakha Technical Campus",
-      schoolImage: "/assets/institutes/Visakha Technical Campus.jpg",
-    },
-  ];
-
-  const timelineContainer = document.querySelector(".timeline");
-
-  educationEvents.forEach((event) => {
-    const educationEvent = document.createElement("div");
-    educationEvent.classList.add("event");
-    educationEvent.setAttribute("data-date", event.date);
-
-    educationEvent.innerHTML = `
-        <div class="university-image">
-          <img src="${event.image}" alt="${event.name}" />
-        </div>
-        <div class="event-details">
-          <div class="course-name">
-            ${event.name}
-            <div class="courseCompletion">${event.completion}</div>
-          </div>
-          <div class="aboutStudy">
-            <ul>${event.studyDetails
-              .map((detail) => `<li>${detail}</li>`)
-              .join("")}</ul>
-          </div>
-          <div class="courseSchool">
-            ${
-              event.schoolImage
-                ? `<img src="${event.schoolImage}" alt="${event.school}" />`
-                : ""
-            }
-            <p>${event.school}</p>
-          </div>
-        </div>
-      `;
-
-    timelineContainer.appendChild(educationEvent);
-  });
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-  const experienceData = [
-    {
-      role: "Technical Support Engineer",
-      company: "Innomise Technologies Pvt Ltd",
-      date: "March 2024 - Present",
-      companyLogo: "/assets/companies/innomise.png",
-      details: [
-        "Requirement Gathering: Collaborated with end-users to understand software requirements.",
-        "Software Implementation: Deployed and supported E-MB software at Visakhapatnam Port Authority.",
-        "User Training: Conducted training sessions for staff to adapt to new systems.",
-        "Technical Communication: Acted as a bridge between developers and end-users.",
-      ],
-      achievements: [
-        "Played a key role in the successful implementation of E-MB software.",
-      ],
-    },
-    {
-      role: "Junior Relationship Officer",
-      company: "Quess (Axis Bank Ltd)",
-      date: "January 2022 - March 2023",
-      companyLogo: "/assets/companies/axis.png",
-      details: [
-        "Client Relationship Management: Cultivated relationships with car loan clients, achieving a 98% satisfaction rate.",
-        "Sales & Service Optimization: Exceeded car loan sales targets by 150%.",
-      ],
-      achievements: [
-        "Awarded 'Super Star' for generating over ₹10 Cr in car loan business.",
-      ],
-    },
-  ];
-
-  const timelineContainer = document.querySelector(".experience-timeline");
-
-  experienceData.forEach((experience) => {
-    const experienceEvent = document.createElement("div");
-    experienceEvent.classList.add("experience");
-
-    experienceEvent.innerHTML = `
-      <div class="company-details">
-        <img src="${experience.companyLogo}" alt="${experience.company}" />
-        <div class="experience-role">
-          <h2>${experience.role}</h2>
-          <div class=" experience-date">
-          <p>${experience.date}</p>
-          </div>
-          <h3>${experience.company}</h3>
-        </div>
-      </div>
-      <div class="event-details">
-        
-        <div class="experience-details">
-          <ul>${experience.details
-            .map((detail) => `<li>${detail}</li>`)
-            .join("")}</ul>
-        </div>
-        <div class="experience-achievements">
-          <h4>Achievements:</h4>
-          <ul>${experience.achievements
-            .map((achievement) => `<li>${achievement}</li>`)
-            .join("")}</ul>
-        </div>
-      </div>
-    `;
-
-    timelineContainer.appendChild(experienceEvent);
-  });
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-  const projectsData = [
-    {
-      href: "https://vaultvista.netlify.app/",
-      previewSrc: "assets/projectPreview/VaultVista.png",
-      title: "Vault Vista Expense Tracker",
-      description:
-        "Empowering financial management with login, register, income, expense tracking, and transaction history features. Built with React, Firebase, Bootstrap, Styled-components, and Vite-React.",
-    },
-    {
-      href: "https://e-commerce-oy6q.onrender.com",
-      previewSrc: "assets/projectPreview/e-commerce.png",
-      title: "E-Commerce Website",
-      description:
-        "A full-stack product management app using React, Node.js, and MongoDB, supporting CRUD operations and tested REST APIs.",
-    },
-    {
-      href: "https://trackitdaily.netlify.app/",
-      previewSrc: "assets/projectPreview/Task Management.png",
-      title: "Track it Daily Website",
-      description:
-        "A full-stack task management system with React, Node.js, and MongoDB, enabling task creation, updates, status tracking, and tested REST APIs.",
-    },
-    {
-      href: "https://manohar7730.github.io/IMDB-Clone/",
-      previewSrc: "assets/projectPreview/IMDBClone.png",
-      title: "IMDB-Clone",
-      description:
-        "Developed a movie information website and ensured seamless accessibility across various devices by applying responsive design principles.",
-    },
-    {
-      href: "https://add-to-cart-mobile-app-2102.netlify.app/",
-      previewSrc: "assets/projectPreview/AddToCartMobileApp.png",
-      title: "Add-To-Cart Mobile App",
-      description:
-        "The Firebase Realtime Shopping List is a web app using Firebase Database for dynamic item addition and removal, providing real-time updates and collaborative management.",
-    },
-    {
-      href: "https://manohar7730.github.io/IPOD/",
-      previewSrc: "assets/projectPreview/Ipod.png",
-      title: "React IPOD App",
-      description:
-        "The React iPod App is a nostalgic music player, recreating the classic iPod interface with a responsive touch interface, rotating click wheel, and customizable themes using React.",
-    },
-    {
-      href: "https://weather-app-2102.netlify.app/",
-      previewSrc: "assets/projectPreview/weatherApp.png",
-      title: "Weather Insight App",
-      description:
-        "Providing real-time updates on temperature, humidity, and wind speed. The intuitive and visually appealing interface ensures a seamless user experience for staying informed about weather conditions.",
-    },
-
-    {
-      href: "https://blackjack-game-2102.netlify.app/",
-      previewSrc: "assets/projectPreview/BlackJackGame.png",
-      title: "BlackJack Game",
-      description:
-        "In this game, players aim to achieve a card sum close to 21 without exceeding it, with dynamic player statistics and restrictions on the maximum number of games allowed.",
-    },
-
-    {
-      href: "https://github.com/Manohar7730/LeadsTracker-ChromeExtension",
-      previewSrc: "assets/projectPreview/Chrome-Extension.png",
-      title: "Leads Tracker Chrome Extension",
-      description:
-        "This JavaScript code serves as a concise bookmark management extension, capturing and storing the current tab URL on button click. It displays clickable bookmarks and allows users to clear all with a double-click.",
-    },
-  ];
-
-  const displayProjects = (projectsData) => {
-    const projectsContainer = document.querySelector(".projects-tiles");
-
-    projectsData.forEach((project) => {
-      const projectTile = document.createElement("a");
-      projectTile.href = project.href;
-      projectTile.target = "_blank";
-      projectTile.classList.add("project-tile");
-
-      projectTile.innerHTML = `
-              <div class="preview">
-                <img src="${project.previewSrc}" alt="${project.title} Project Preview" />
-              </div>
-              <div class="about">
-                <h3>${project.title}</h3>
-                <p>${project.description}</p>
-              </div>
-            `;
-
-      projectsContainer.appendChild(projectTile);
+  // --- Smooth Scroll ---
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener("click", function (e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute("href"));
+      if (target) target.scrollIntoView({ behavior: "smooth" });
     });
-  };
+  });
 
-  displayProjects(projectsData);
-});
+  // --- Contact Form ---
+  const contactForm = document.getElementById("contactForm");
+  if (contactForm) {
+    contactForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const message = document.getElementById("message").value.trim();
+
+      if (!name || !email || !message) {
+        alert("Please fill in all required fields!");
+        return;
+      }
+
+      if (!validateEmail(email)) {
+        alert("Please enter a valid email address!");
+        return;
+      }
+
+      // Send email using EmailJS v4
+      emailjs
+        .sendForm("service_v41rt9h", "template_kon4whc", contactForm)
+        .then(() => {
+          alert("Message sent successfully!");
+          contactForm.reset();
+        })
+        .catch((error) => {
+          console.error(error);
+          alert("Failed to send message.");
+        });
+    });
+
+    function validateEmail(email) {
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return re.test(email);
+    }
+  }
+
+}
+
+// Initialize when DOM is loaded
+document.addEventListener("DOMContentLoaded", initializePortfolio);
